@@ -126,4 +126,22 @@ public class OrdenXML {
         if (nl.getLength() == 0) return "";
         return nl.item(0).getTextContent();
     }
+
+    public static String generarNuevoIdOrden() {
+        List<OrdenTrabajo> ordenes = leerOrdenes();
+        int maxId = 0;
+
+        for (OrdenTrabajo orden : ordenes) {
+            try {
+                int currentId = Integer.parseInt(orden.getId());
+                if (currentId > maxId) {
+                    maxId = currentId;
+                }
+            } catch (NumberFormatException e) {
+                //Salta el id si no es numerico
+            }
+        }
+
+        return String.valueOf(maxId + 1);
+    }
 }

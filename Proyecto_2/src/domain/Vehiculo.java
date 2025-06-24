@@ -8,7 +8,7 @@ public class Vehiculo {
     private String marca;
     private String color;
     private String estilo;
-    private int anio;
+    private int anno;
     private String vin;
     private double cilindraje;
     private String clienteId; // referencia al propietario
@@ -16,12 +16,12 @@ public class Vehiculo {
     // Constructor, getters, setters
     public Vehiculo() {}
 
-    public Vehiculo(String placa, String marca, String color, String estilo, int anio, String vin, double cilindraje, String clienteId) {
+    public Vehiculo(String placa, String marca, String color, String estilo, int anno, String vin, double cilindraje, String clienteId) {
         this.placa = placa;
         this.marca = marca;
         this.color = color;
         this.estilo = estilo;
-        this.anio = anio;
+        this.anno = anno;
         this.vin = vin;
         this.cilindraje = cilindraje;
         this.clienteId = clienteId;
@@ -59,12 +59,12 @@ public class Vehiculo {
         this.estilo = estilo;
     }
 
-    public int getAnio() {
-        return anio;
+    public int getAnno() {
+        return anno;
     }
 
-    public void setAnio(int anio) {
-        this.anio = anio;
+    public void setAnno(int anno) {
+        this.anno = anno;
     }
 
     public String getVin() {

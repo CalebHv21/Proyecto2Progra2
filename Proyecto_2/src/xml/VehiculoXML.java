@@ -62,7 +62,7 @@ public class VehiculoXML {
                 appendElement(doc, vehiculo, "marca", v.getMarca());
                 appendElement(doc, vehiculo, "color", v.getColor());
                 appendElement(doc, vehiculo, "estilo", v.getEstilo());
-                appendElement(doc, vehiculo, "anio", String.valueOf(v.getAnio()));
+                appendElement(doc, vehiculo, "anio", String.valueOf(v.getAnno()));
                 appendElement(doc, vehiculo, "vin", v.getVin());
                 appendElement(doc, vehiculo, "cilindraje", String.valueOf(v.getCilindraje()));
                 appendElement(doc, vehiculo, "clienteId", v.getClienteId());
@@ -89,5 +89,23 @@ public class VehiculoXML {
         NodeList nl = elem.getElementsByTagName(tag);
         if (nl.getLength() == 0) return "";
         return nl.item(0).getTextContent();
+    }
+
+    public static void ordenarVehiculosPorPlaca(List<Vehiculo> vehiculos) {
+        vehiculos.sort(Comparator.comparing(Vehiculo::getPlaca));
+    }
+
+    public static Vehiculo buscarVehiculoPorPlaca(List<Vehiculo> vehiculos, String placa) {
+        ordenarVehiculosPorPlaca(vehiculos);
+        int left = 0, right = vehiculos.size() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            Vehiculo v = vehiculos.get(mid);
+            int cmp = v.getPlaca().compareToIgnoreCase(placa);
+            if (cmp == 0) return v;
+            if (cmp < 0) left = mid + 1;
+            else right = mid - 1;
+        }
+        return null;
     }
 }

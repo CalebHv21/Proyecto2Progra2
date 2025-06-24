@@ -21,7 +21,7 @@
     <input type="text" name="estilo" value="${vehiculo.estilo}" required/><br/>
 
     <label>Año:</label>
-    <input type="number" name="anio" value="${vehiculo.anio}" min="1900" max="2100" required/><br/>
+    <input type="number" name="anno" value="${vehiculo.anno}" min="1900" max="2100" required/><br/>
 
     <label>VIN:</label>
     <input type="text" name="vin" value="${vehiculo.vin}" required/><br/>

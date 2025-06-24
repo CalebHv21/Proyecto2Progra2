@@ -86,4 +86,15 @@ public class ClienteXML {
         if (nl.getLength() == 0) return "";
         return nl.item(0).getTextContent();
     }
+
+    public static Cliente buscarClientePorId(List<Cliente> clientes, String id) {
+        for (Cliente c : clientes) {
+            if (c.getId().equals(id)) return c;
+        }
+        return null;
+    }
+
+    public static void ordenarClientesPorId(List<Cliente> clientes) {
+        clientes.sort(Comparator.comparing(Cliente::getId));
+    }
 }
