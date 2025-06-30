@@ -1,0 +1,12 @@
+mecanico\paraiso\data\VehiculoXML.class
+cr\ac\ucr\progra2\paraiso\proyecto2\progra2\JakartaRestConfiguration.class
+mecanico\paraiso\domain\Cliente.class
+mecanico\paraiso\domain\OrdenTrabajo.class
+mecanico\paraiso\servlets\ClienteServlet.class
+mecanico\paraiso\servlets\VehiculoServlet.class
+mecanico\paraiso\data\OrdenXML.class
+mecanico\paraiso\data\ClienteXML.class
+mecanico\paraiso\resources\JakartaEE10Resource.class
+mecanico\paraiso\servlets\OrdenServlet.class
+mecanico\paraiso\domain\Vehiculo.class
+mecanico\paraiso\domain\RepuestoServicio.class
