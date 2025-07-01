@@ -23,11 +23,11 @@ public class ClienteServlet extends HttpServlet {
             List<Cliente> clientes = ClienteXmlData.leerClientes();
             Cliente cliente = ClienteXmlData.buscarClientePorId(clientes, id);
             request.setAttribute("cliente", cliente);
-            request.getRequestDispatcher("formCliente.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/clientes/FormCliente.jsp").forward(request, response);
         } else {
             List<Cliente> clientes = ClienteXmlData.leerClientes();
             ClienteXmlData.ordenarClientesPorId(clientes);
-            request.getRequestDispatcher("listarClientes.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/clientes/ListarClientes.jsp").forward(request, response);
         }
     }
 
@@ -48,7 +48,7 @@ public class ClienteServlet extends HttpServlet {
         if (id == null || nombre == null || apellidos == null || telefono == null || direccion == null || correo == null
                 || id.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || correo.isEmpty()) {
             request.setAttribute("error", "Todos los campos son obligatorios.");
-            request.getRequestDispatcher("formCliente.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/clientes/FormCliente.jsp").forward(request, response);
             return;
         }
 
@@ -56,7 +56,7 @@ public class ClienteServlet extends HttpServlet {
             //Evitar duplicados
             if (ClienteXmlData.buscarClientePorId(clientes, id) != null) {
                 request.setAttribute("error", "Ya existe un cliente con esa cédula.");
-                request.getRequestDispatcher("formCliente.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/clientes/FormCliente.jsp").forward(request, response);
                 return;
             }
             Cliente nuevo = new Cliente(id, nombre, apellidos, telefono, direccion, correo);

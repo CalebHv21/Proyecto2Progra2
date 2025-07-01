@@ -46,7 +46,7 @@ public class OrdenServlet extends HttpServlet {
             List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
             request.setAttribute("vehiculos", vehiculos);
             request.setAttribute("orden", orden);
-            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/formOrden.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/FormOrden.jsp").forward(request, response);
         } else if ("agregarRepuestoServicio".equals(accion)) {
             String id = request.getParameter("id");
             List<OrdenTrabajo> ordenes = OrdenXmlData.leerOrdenes();
@@ -58,15 +58,15 @@ public class OrdenServlet extends HttpServlet {
                 }
             }
             request.setAttribute("orden", orden);
-            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/AgregarRepuesto.jsp").forward(request, response);
         } else if ("registrar".equals(accion)) {
             List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
             request.setAttribute("vehiculos", vehiculos);
-            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/formOrden.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/FormOrden.jsp").forward(request, response);
         } else {
             List<OrdenTrabajo> ordenes = OrdenXmlData.leerOrdenes();
             request.setAttribute("ordenes", ordenes);
-            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/listarOrdenes.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/ListarOrdenes.jsp").forward(request, response);
         }
     }
 
@@ -91,7 +91,7 @@ public class OrdenServlet extends HttpServlet {
                 List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
                 request.setAttribute("vehiculos", vehiculos);
                 request.setAttribute("error", "Todos los campos son obligatorios.");
-                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/formOrden.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/FormOrden.jsp").forward(request, response);
                 return;
             }
 
@@ -132,7 +132,7 @@ public class OrdenServlet extends HttpServlet {
                 List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
                 request.setAttribute("vehiculos", vehiculos);
                 request.setAttribute("error", "Fechas inválidas.");
-                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/formOrden.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/FormOrden.jsp").forward(request, response);
             }
         } else if ("agregarRepuestoServicio".equals(accion)) {
             String idOrden = request.getParameter("idOrden");
@@ -149,7 +149,7 @@ public class OrdenServlet extends HttpServlet {
                 for (OrdenTrabajo o : ordenes) if (o.getId().equals(idOrden)) orden = o;
                 request.setAttribute("orden", orden);
                 request.setAttribute("error", "Todos los campos son obligatorios.");
-                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/AgregarRepuesto.jsp").forward(request, response);
                 return;
             }
 
@@ -163,7 +163,7 @@ public class OrdenServlet extends HttpServlet {
                 for (OrdenTrabajo o : ordenes) if (o.getId().equals(idOrden)) orden = o;
                 request.setAttribute("orden", orden);
                 request.setAttribute("error", "Cantidad y precio deben ser válidos.");
-                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/AgregarRepuesto.jsp").forward(request, response);
                 return;
             }
 
@@ -173,7 +173,7 @@ public class OrdenServlet extends HttpServlet {
                     if (!"En reparación".equals(o.getEstado())) {
                         request.setAttribute("orden", o);
                         request.setAttribute("error", "Solo se pueden agregar detalles mientras la orden está en 'En reparación'.");
-                        request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+                        request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/AgregarRepuesto.jsp").forward(request, response);
                         return;
                     }
                     RepuestoServicio rs = new RepuestoServicio(nombre, cantidad, precio, fuePedido, esManoObra);

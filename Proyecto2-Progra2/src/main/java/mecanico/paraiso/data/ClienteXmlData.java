@@ -13,7 +13,7 @@ import java.util.*;
  * @author sebas
  */
 public class ClienteXmlData {
-    private static final String rutaArchivo = "src/main/resources/data/clientes.xml";
+    private static final String rutaArchivo = "C:\\Users\\sebas\\OneDrive\\Escritorio\\Progra 2(2)\\New folder\\Proyecto2-Progra2.v2\\src\\main\\java\\filesXml";
     
     public static List<Cliente> leerClientes() {
         List<Cliente> clientes = new ArrayList<>();

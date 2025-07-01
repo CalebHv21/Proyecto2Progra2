@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class OrdenXmlData {
-    private static final String XML_PATH = "src/main/resources/data/ordenes.xml";
+    private static final String XML_PATH = "C:\\Users\\sebas\\OneDrive\\Escritorio\\Progra 2(2)\\New folder\\Proyecto2-Progra2.v2\\src\\main\\java\\filesXml";
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public static List<OrdenTrabajo> leerOrdenes() {
