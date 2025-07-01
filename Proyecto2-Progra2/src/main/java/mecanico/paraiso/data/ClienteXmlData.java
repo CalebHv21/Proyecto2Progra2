@@ -7,13 +7,13 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import java.io.*;
 import java.util.*;
-
+        
 /**
  *
  * @author sebas
  */
 public class ClienteXmlData {
-    private static final String rutaArchivo = "C:\\Users\\sebas\\OneDrive\\Escritorio\\Progra 2(2)\\New folder\\Proyecto2-Progra2.v2\\src\\main\\java\\filesXml";
+    private static final String rutaArchivo = "C:\\Users\\sebas\\OneDrive\\Escritorio\\Progra 2(2)\\New folder\\Proyecto2-Progra2.v2\\src\\main\\java\\filesXml\\clientes.xml";
     
     public static List<Cliente> leerClientes() {
         List<Cliente> clientes = new ArrayList<>();

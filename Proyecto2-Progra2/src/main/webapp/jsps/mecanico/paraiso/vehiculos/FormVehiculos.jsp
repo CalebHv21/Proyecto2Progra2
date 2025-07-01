@@ -140,17 +140,11 @@
 
                                 <div class="mb-3">
                                     <label for="clienteId" class="form-label">Propietario *</label>
-                                    <select class="form-select" id="clienteId" name="clienteId" required>
-                                        <option value="">Seleccione el propietario</option>
-                                        <c:forEach var="cli" items="${clientes}">
-                                            <option value="${cli.id}" 
-                                                    ${vehiculo != null && vehiculo.clienteId == cli.id ? 'selected' : ''}>
-                                                ${cli.nombre} ${cli.apellidos} - ${cli.id}
-                                            </option>
-                                        </c:forEach>
-                                    </select>
+                                    <input type="text" class="form-control" id="clienteId" name="clienteId" 
+                                           value="${vehiculo != null ? vehiculo.clienteId : ''}" 
+                                           required placeholder="Ingrese el ID del propietario">
                                     <div class="invalid-feedback">
-                                        Por favor seleccione el propietario del vehículo.
+                                        Por favor ingrese el ID del propietario.
                                     </div>
                                 </div>
 
