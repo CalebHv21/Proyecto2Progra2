@@ -1,32 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    <servlet>
-        <servlet-name>VehiculoServlet</servlet-name>
-        <servlet-class>mecanico.paraiso.servlets.VehiculoServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ClienteServlet</servlet-name>
-        <servlet-class>mecanico.paraiso.servlets.ClienteServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>OrdenServlet</servlet-name>
-        <servlet-class>mecanico.paraiso.servlets.OrdenServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>VehiculoServlet</servlet-name>
-        <url-pattern>/vehiculo</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ClienteServlet</servlet-name>
-        <url-pattern>/cliente</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OrdenServlet</servlet-name>
-        <url-pattern>/orden</url-pattern>
-    </servlet-mapping>
+<web-app version="6.0" 
+         xmlns="https://jakarta.ee/xml/ns/jakartaee" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee 
+         https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
+    
 </web-app>

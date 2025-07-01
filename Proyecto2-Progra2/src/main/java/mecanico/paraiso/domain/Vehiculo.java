@@ -4,29 +4,31 @@
  */
 package mecanico.paraiso.domain;
 
-/**
- *
- * @author sebas
- */
 import java.util.Comparator;
 import java.util.List;
 
 public class Vehiculo {
     private String placa; // única
     private String marca;
+    private String modelo; // Agregar modelo
     private String color;
     private String estilo;
-    private int anno;
+    private int anno; // Mantener anno como estaba
     private String vin;
     private double cilindraje;
     private String clienteId; // referencia al propietario
+    
+    // Propiedades derivadas para compatibilidad con JSP
+    private String nombrePropietario; // Se llenará desde Cliente
+    private String telefonoPropietario; // Se llenará desde Cliente
 
-    // Constructor, getters, setters
     public Vehiculo() {}
 
-    public Vehiculo(String placa, String marca, String color, String estilo, int anno, String vin, double cilindraje, String clienteId) {
+    public Vehiculo(String placa, String marca, String modelo, String color, String estilo, 
+                   int anno, String vin, double cilindraje, String clienteId) {
         this.placa = placa;
         this.marca = marca;
+        this.modelo = modelo;
         this.color = color;
         this.estilo = estilo;
         this.anno = anno;
@@ -35,69 +37,40 @@ public class Vehiculo {
         this.clienteId = clienteId;
     }
 
-    public String getPlaca() {
-        return placa;
-    }
+    // Getters y Setters
+    public String getPlaca() { return placa; }
+    public void setPlaca(String placa) { this.placa = placa; }
 
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
+    public String getMarca() { return marca; }
+    public void setMarca(String marca) { this.marca = marca; }
 
-    public String getMarca() {
-        return marca;
-    }
+    public String getModelo() { return modelo; }
+    public void setModelo(String modelo) { this.modelo = modelo; }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
 
-    public String getColor() {
-        return color;
-    }
+    public String getEstilo() { return estilo; }
+    public void setEstilo(String estilo) { this.estilo = estilo; }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
+    public int getAnno() { return anno; }
+    public void setAnno(int anno) { this.anno = anno; }
 
-    public String getEstilo() {
-        return estilo;
-    }
+    public String getVin() { return vin; }
+    public void setVin(String vin) { this.vin = vin; }
 
-    public void setEstilo(String estilo) {
-        this.estilo = estilo;
-    }
+    public double getCilindraje() { return cilindraje; }
+    public void setCilindraje(double cilindraje) { this.cilindraje = cilindraje; }
 
-    public int getAnno() {
-        return anno;
-    }
+    public String getClienteId() { return clienteId; }
+    public void setClienteId(String clienteId) { this.clienteId = clienteId; }
 
-    public void setAnno(int anno) {
-        this.anno = anno;
-    }
+    // Propiedades para JSP
+    public String getNombrePropietario() { return nombrePropietario; }
+    public void setNombrePropietario(String nombrePropietario) { this.nombrePropietario = nombrePropietario; }
 
-    public String getVin() {
-        return vin;
-    }
-
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
-    public double getCilindraje() {
-        return cilindraje;
-    }
-
-    public void setCilindraje(double cilindraje) {
-        this.cilindraje = cilindraje;
-    }
-
-    public String getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(String clienteId) {
-        this.clienteId = clienteId;
-    }
+    public String getTelefonoPropietario() { return telefonoPropietario; }
+    public void setTelefonoPropietario(String telefonoPropietario) { this.telefonoPropietario = telefonoPropietario; }
 
     public static void ordenarVehiculosPorPlaca(List<Vehiculo> vehiculos) {
         vehiculos.sort(Comparator.comparing(Vehiculo::getPlaca));

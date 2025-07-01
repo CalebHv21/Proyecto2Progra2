@@ -30,16 +30,16 @@ public class VehiculoXmlData {
                     Vehiculo vehiculo = new Vehiculo(
                         getElementValue(vehiculoElement, "placa"),
                         getElementValue(vehiculoElement, "marca"),
+                        getElementValue(vehiculoElement, "modelo"), // Agregar modelo
                         getElementValue(vehiculoElement, "color"),
                         getElementValue(vehiculoElement, "estilo"),
-                        Integer.parseInt(getElementValue(vehiculoElement, "anio")),
+                        Integer.parseInt(getElementValue(vehiculoElement, "anio")), // Mantener anio en XML
                         getElementValue(vehiculoElement, "vin"),
                         Double.parseDouble(getElementValue(vehiculoElement, "cilindraje")),
                         getElementValue(vehiculoElement, "clienteId")
                     );
                     vehiculos.add(vehiculo);
                 } catch (NumberFormatException e) {
-                    // Skip vehiculos with invalid numeric data
                     System.err.println("Error parsing vehiculo data: " + e.getMessage());
                 }
             }
@@ -51,7 +51,6 @@ public class VehiculoXmlData {
 
     public static void guardarVehiculos(List<Vehiculo> vehiculos) {
         try {
-            // Crear directorio si no existe
             File file = new File(XML_PATH);
             file.getParentFile().mkdirs();
 
@@ -63,9 +62,10 @@ public class VehiculoXmlData {
                 
                 vehiculoElement.addContent(new Element("placa").setText(vehiculo.getPlaca()));
                 vehiculoElement.addContent(new Element("marca").setText(vehiculo.getMarca()));
+                vehiculoElement.addContent(new Element("modelo").setText(vehiculo.getModelo() != null ? vehiculo.getModelo() : ""));
                 vehiculoElement.addContent(new Element("color").setText(vehiculo.getColor()));
                 vehiculoElement.addContent(new Element("estilo").setText(vehiculo.getEstilo()));
-                vehiculoElement.addContent(new Element("anio").setText(String.valueOf(vehiculo.getAnno())));
+                vehiculoElement.addContent(new Element("anio").setText(String.valueOf(vehiculo.getAnno()))); // Mantener anio en XML
                 vehiculoElement.addContent(new Element("vin").setText(vehiculo.getVin()));
                 vehiculoElement.addContent(new Element("cilindraje").setText(String.valueOf(vehiculo.getCilindraje())));
                 vehiculoElement.addContent(new Element("clienteId").setText(vehiculo.getClienteId()));
