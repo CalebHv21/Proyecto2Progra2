@@ -168,7 +168,7 @@
                                                                 <i class="fas fa-car"></i> <%= vehiculo.getPlaca() %>
                                                             </h5>
                                                             <p class="mb-0 small">
-                                                                <%= vehiculo.getMarca() %> <%= vehiculo.getModelo() %> (<%= vehiculo.getAno() %>)
+                                                                <%= vehiculo.getMarca() %> <%= vehiculo.getModelo() %> (<%= vehiculo.getAnno() %>)
                                                             </p>
                                                         </div>
                                                         <div class="text-end">
@@ -294,7 +294,7 @@
                                                                     <tr><td><strong>Placa:</strong></td><td><%= vehiculo.getPlaca() %></td></tr>
                                                                     <tr><td><strong>Marca:</strong></td><td><%= vehiculo.getMarca() %></td></tr>
                                                                     <tr><td><strong>Modelo:</strong></td><td><%= vehiculo.getModelo() %></td></tr>
-                                                                    <tr><td><strong>Año:</strong></td><td><%= vehiculo.getAno() %></td></tr>
+                                                                    <tr><td><strong>Año:</strong></td><td><%= vehiculo.getAnno() %></td></tr>
                                                                     <tr><td><strong>Color:</strong></td><td><%= vehiculo.getColor() %></td></tr>
                                                                 </table>
 
