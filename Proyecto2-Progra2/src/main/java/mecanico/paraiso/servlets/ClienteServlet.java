@@ -1,16 +1,18 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package mecanico.paraiso.servlets;
 
 import mecanico.paraiso.domain.Cliente;
-import mecanico.paraiso.data.ClienteXML;
-
-// ✅ CAMBIAR ESTOS IMPORTS DE javax.* A jakarta.*
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+import mecanico.paraiso.data.ClienteXmlData;
 
-@WebServlet("/ClienteServlet")
+@WebServlet(name = "cliente", urlPatterns = {"/cliente"})
 public class ClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -18,16 +20,13 @@ public class ClienteServlet extends HttpServlet {
         String accion = request.getParameter("accion");
         if ("editar".equals(accion)) {
             String id = request.getParameter("id");
-            List<Cliente> clientes = ClienteXML.leerClientes();
-            Cliente cliente = ClienteXML.buscarClientePorId(clientes, id);
+            List<Cliente> clientes = ClienteXmlData.leerClientes();
+            Cliente cliente = ClienteXmlData.buscarClientePorId(clientes, id);
             request.setAttribute("cliente", cliente);
-            // ✅ TAMBIÉN CORREGIR LA RUTA (usar / no .)
             request.getRequestDispatcher("formCliente.jsp").forward(request, response);
         } else {
-            List<Cliente> clientes = ClienteXML.leerClientes();
-            ClienteXML.ordenarClientesPorId(clientes);
-            request.setAttribute("clientes", clientes);
-            // ✅ TAMBIÉN CORREGIR LA RUTA (usar / no .)
+            List<Cliente> clientes = ClienteXmlData.leerClientes();
+            ClienteXmlData.ordenarClientesPorId(clientes);
             request.getRequestDispatcher("listarClientes.jsp").forward(request, response);
         }
     }
@@ -36,7 +35,7 @@ public class ClienteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        List<Cliente> clientes = ClienteXML.leerClientes();
+        List<Cliente> clientes = ClienteXmlData.leerClientes();
 
         String id = request.getParameter("id");
         String nombre = request.getParameter("nombre");
@@ -49,23 +48,21 @@ public class ClienteServlet extends HttpServlet {
         if (id == null || nombre == null || apellidos == null || telefono == null || direccion == null || correo == null
                 || id.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() || direccion.isEmpty() || correo.isEmpty()) {
             request.setAttribute("error", "Todos los campos son obligatorios.");
-            // ✅ CORREGIR LA RUTA
             request.getRequestDispatcher("formCliente.jsp").forward(request, response);
             return;
         }
 
         if ("registrar".equals(accion)) {
             //Evitar duplicados
-            if (ClienteXML.buscarClientePorId(clientes, id) != null) {
+            if (ClienteXmlData.buscarClientePorId(clientes, id) != null) {
                 request.setAttribute("error", "Ya existe un cliente con esa cédula.");
-                // ✅ CORREGIR LA RUTA
                 request.getRequestDispatcher("formCliente.jsp").forward(request, response);
                 return;
             }
             Cliente nuevo = new Cliente(id, nombre, apellidos, telefono, direccion, correo);
             clientes.add(nuevo);
         } else if ("editar".equals(accion)) {
-            Cliente cliente = ClienteXML.buscarClientePorId(clientes, id);
+            Cliente cliente = ClienteXmlData.buscarClientePorId(clientes, id);
             if (cliente != null) {
                 cliente.setNombre(nombre);
                 cliente.setApellidos(apellidos);
@@ -74,7 +71,7 @@ public class ClienteServlet extends HttpServlet {
                 cliente.setCorreo(correo);
             }
         }
-        ClienteXML.guardarClientes(clientes);
-        response.sendRedirect("ClienteServlet");
+        ClienteXmlData.guardarClientes(clientes);
+        response.sendRedirect("cliente");
     }
 }

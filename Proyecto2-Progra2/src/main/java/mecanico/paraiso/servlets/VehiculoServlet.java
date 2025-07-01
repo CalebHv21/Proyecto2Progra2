@@ -1,15 +1,25 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package mecanico.paraiso.servlets;
 
-import mecanico.paraiso.domain.Vehiculo;
-import mecanico.paraiso.domain.Cliente;
-import mecanico.paraiso.data.VehiculoXML;
-import mecanico.paraiso.data.ClienteXML;
-import jakarta.servlet.ServletException;          
-import jakarta.servlet.annotation.WebServlet;     
-import jakarta.servlet.http.*;              
 import java.io.IOException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import mecanico.paraiso.data.ClienteXmlData;
+import mecanico.paraiso.data.VehiculoXmlData;
+import mecanico.paraiso.domain.Cliente;
+import mecanico.paraiso.domain.Vehiculo;
 
+/**
+ *
+ * @author sebas
+ */
 @WebServlet(name = "vehiculo", urlPatterns = {"/vehiculo"})
 public class VehiculoServlet extends HttpServlet {
     @Override
@@ -17,20 +27,20 @@ public class VehiculoServlet extends HttpServlet {
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
 
-        List<Cliente> clientes = ClienteXML.leerClientes();
+        List<Cliente> clientes = ClienteXmlData.leerClientes();
         request.setAttribute("clientes", clientes);
 
         if ("editar".equals(accion)) {
             String placa = request.getParameter("placa");
-            List<Vehiculo> vehiculos = VehiculoXML.leerVehiculos();
-            Vehiculo vehiculo = VehiculoXML.buscarVehiculoPorPlaca(vehiculos, placa);
+            List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
+            Vehiculo vehiculo = VehiculoXmlData.buscarVehiculoPorPlaca(vehiculos, placa);
             request.setAttribute("vehiculo", vehiculo);
-            request.getRequestDispatcher("jsp/vehiculos/formVehiculo.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/vehiculos/formVehiculo.jsp").forward(request, response);
         } else {
-            List<Vehiculo> vehiculos = VehiculoXML.leerVehiculos();
-            VehiculoXML.ordenarVehiculosPorPlaca(vehiculos);
+            List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
+            VehiculoXmlData.ordenarVehiculosPorPlaca(vehiculos);
             request.setAttribute("vehiculos", vehiculos);
-            request.getRequestDispatcher("jsp/vehiculos/listarVehiculos.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/vehiculos/listarVehiculos.jsp").forward(request, response);
         }
     }
 
@@ -38,7 +48,7 @@ public class VehiculoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        List<Vehiculo> vehiculos = VehiculoXML.leerVehiculos();
+        List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
 
         String placa = request.getParameter("placa");
         String marca = request.getParameter("marca");
@@ -53,9 +63,9 @@ public class VehiculoServlet extends HttpServlet {
         if (placa == null || marca == null || color == null || estilo == null || annoStr == null || vin == null || cilindrajeStr == null || clienteId == null
                 || placa.isEmpty() || marca.isEmpty() || color.isEmpty() || estilo.isEmpty() || annoStr.isEmpty() || vin.isEmpty() || cilindrajeStr.isEmpty() || clienteId.isEmpty()) {
             request.setAttribute("error", "Todos los campos son obligatorios.");
-            List<Cliente> clientes = ClienteXML.leerClientes();
+            List<Cliente> clientes = ClienteXmlData.leerClientes();
             request.setAttribute("clientes", clientes);
-            request.getRequestDispatcher("jsp/vehiculos/formVehiculo.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/vehiculos/formVehiculo.jsp").forward(request, response);
             return;
         }
 
@@ -66,24 +76,24 @@ public class VehiculoServlet extends HttpServlet {
             cilindraje = Double.parseDouble(cilindrajeStr);
         } catch (NumberFormatException e) {
             request.setAttribute("error", "Año y cilindraje deben ser valores válidos.");
-            List<Cliente> clientes = ClienteXML.leerClientes();
+            List<Cliente> clientes = ClienteXmlData.leerClientes();
             request.setAttribute("clientes", clientes);
-            request.getRequestDispatcher("jsp/vehiculos/formVehiculo.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/vehiculos/formVehiculo.jsp").forward(request, response);
             return;
         }
 
         if ("registrar".equals(accion)) {
-            if (VehiculoXML.buscarVehiculoPorPlaca(vehiculos, placa) != null) {
+            if (VehiculoXmlData.buscarVehiculoPorPlaca(vehiculos, placa) != null) {
                 request.setAttribute("error", "Ya existe un vehículo con esa placa.");
-                List<Cliente> clientes = ClienteXML.leerClientes();
+                List<Cliente> clientes = ClienteXmlData.leerClientes();
                 request.setAttribute("clientes", clientes);
-                request.getRequestDispatcher("jsp/vehiculos/formVehiculo.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/vehiculos/formVehiculo.jsp").forward(request, response);
                 return;
             }
             Vehiculo nuevo = new Vehiculo(placa, marca, color, estilo, anno, vin, cilindraje, clienteId);
             vehiculos.add(nuevo);
         } else if ("editar".equals(accion)) {
-            Vehiculo vehiculo = VehiculoXML.buscarVehiculoPorPlaca(vehiculos, placa);
+            Vehiculo vehiculo = VehiculoXmlData.buscarVehiculoPorPlaca(vehiculos, placa);
             if (vehiculo != null) {
                 vehiculo.setMarca(marca);
                 vehiculo.setColor(color);
@@ -94,7 +104,7 @@ public class VehiculoServlet extends HttpServlet {
                 vehiculo.setClienteId(clienteId);
             }
         }
-        VehiculoXML.guardarVehiculos(vehiculos);
-        response.sendRedirect("vehiculo");  // ✅ También corregido: "vehiculo" en lugar de "VehiculoServlet"
+        VehiculoXmlData.guardarVehiculos(vehiculos);
+        response.sendRedirect("vehiculo");  
     }
 }

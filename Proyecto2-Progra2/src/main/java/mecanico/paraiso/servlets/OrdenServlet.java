@@ -1,16 +1,30 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package mecanico.paraiso.servlets;
 
-import mecanico.paraiso.domain.*;
-import mecanico.paraiso.data.*;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
 import java.io.IOException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import mecanico.paraiso.data.OrdenXmlData;
+import mecanico.paraiso.data.VehiculoXmlData;
+import mecanico.paraiso.domain.OrdenTrabajo;
+import mecanico.paraiso.domain.RepuestoServicio;
+import mecanico.paraiso.domain.Vehiculo;
 
-@WebServlet("/OrdenServlet")
+/**
+ * 
+ * @author sebas
+ */
+@WebServlet(name = "orden", urlPatterns = {"/orden"})
 public class OrdenServlet extends HttpServlet {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -21,7 +35,7 @@ public class OrdenServlet extends HttpServlet {
 
         if ("editar".equals(accion)) {
             String id = request.getParameter("id");
-            List<OrdenTrabajo> ordenes = OrdenXML.leerOrdenes();
+            List<OrdenTrabajo> ordenes = OrdenXmlData.leerOrdenes();
             OrdenTrabajo orden = null;
             for (OrdenTrabajo o : ordenes) {
                 if (o.getId().equals(id)) {
@@ -29,13 +43,13 @@ public class OrdenServlet extends HttpServlet {
                     break;
                 }
             }
-            List<Vehiculo> vehiculos = VehiculoXML.leerVehiculos();
+            List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
             request.setAttribute("vehiculos", vehiculos);
             request.setAttribute("orden", orden);
-            request.getRequestDispatcher("jsp.mecanino.paraiso/ordenes/formOrden.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/formOrden.jsp").forward(request, response);
         } else if ("agregarRepuestoServicio".equals(accion)) {
             String id = request.getParameter("id");
-            List<OrdenTrabajo> ordenes = OrdenXML.leerOrdenes();
+            List<OrdenTrabajo> ordenes = OrdenXmlData.leerOrdenes();
             OrdenTrabajo orden = null;
             for (OrdenTrabajo o : ordenes) {
                 if (o.getId().equals(id)) {
@@ -44,11 +58,15 @@ public class OrdenServlet extends HttpServlet {
                 }
             }
             request.setAttribute("orden", orden);
-            request.getRequestDispatcher("jsp/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+        } else if ("registrar".equals(accion)) {
+            List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
+            request.setAttribute("vehiculos", vehiculos);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/formOrden.jsp").forward(request, response);
         } else {
-            List<OrdenTrabajo> ordenes = OrdenXML.leerOrdenes();
+            List<OrdenTrabajo> ordenes = OrdenXmlData.leerOrdenes();
             request.setAttribute("ordenes", ordenes);
-            request.getRequestDispatcher("jsp/ordenes/listarOrdenes.jsp").forward(request, response);
+            request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/listarOrdenes.jsp").forward(request, response);
         }
     }
 
@@ -56,7 +74,7 @@ public class OrdenServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        List<OrdenTrabajo> ordenes = OrdenXML.leerOrdenes();
+        List<OrdenTrabajo> ordenes = OrdenXmlData.leerOrdenes();
 
         if ("registrar".equals(accion) || "editar".equals(accion)) {
             String id = request.getParameter("id");
@@ -67,13 +85,13 @@ public class OrdenServlet extends HttpServlet {
             String observaciones = request.getParameter("observaciones");
             String fechaEstimadaDevolucionStr = request.getParameter("fechaEstimadaDevolucion");
 
-            //Validación
+            // Validación
             if (placaVehiculo == null || fechaIngresoStr == null || estado == null || descripcionProblema == null || fechaEstimadaDevolucionStr == null ||
                     placaVehiculo.isEmpty() || fechaIngresoStr.isEmpty() || estado.isEmpty() || descripcionProblema.isEmpty() || fechaEstimadaDevolucionStr.isEmpty()) {
-                List<Vehiculo> vehiculos = VehiculoXML.leerVehiculos();
+                List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
                 request.setAttribute("vehiculos", vehiculos);
-                request.setAttribute("error", "Todos los campos obligatorios.");
-                request.getRequestDispatcher("jsp/ordenes/formOrden.jsp").forward(request, response);
+                request.setAttribute("error", "Todos los campos son obligatorios.");
+                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/formOrden.jsp").forward(request, response);
                 return;
             }
 
@@ -82,7 +100,7 @@ public class OrdenServlet extends HttpServlet {
                 Date fechaEstimadaDevolucion = sdf.parse(fechaEstimadaDevolucionStr);
 
                 if ("registrar".equals(accion)) {
-                    String nuevoId = OrdenXML.generarNuevoIdOrden();
+                    String nuevoId = OrdenXmlData.generarNuevoIdOrden();
                     OrdenTrabajo nueva = new OrdenTrabajo();
                     nueva.setId(nuevoId);
                     nueva.setPlacaVehiculo(placaVehiculo);
@@ -95,7 +113,7 @@ public class OrdenServlet extends HttpServlet {
                     nueva.setCostoTotal(0.0);
                     ordenes.add(nueva);
 
-                } else { //editar
+                } else { // editar
                     for (OrdenTrabajo o : ordenes) {
                         if (o.getId().equals(id)) {
                             o.setEstado(estado);
@@ -107,14 +125,14 @@ public class OrdenServlet extends HttpServlet {
                     }
                 }
 
-                OrdenXML.guardarOrdenes(ordenes);
-                response.sendRedirect("OrdenServlet");
+                OrdenXmlData.guardarOrdenes(ordenes);
+                response.sendRedirect("orden");
 
             } catch (Exception e) {
-                List<Vehiculo> vehiculos = VehiculoXML.leerVehiculos();
+                List<Vehiculo> vehiculos = VehiculoXmlData.leerVehiculos();
                 request.setAttribute("vehiculos", vehiculos);
                 request.setAttribute("error", "Fechas inválidas.");
-                request.getRequestDispatcher("jsp/ordenes/formOrden.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/formOrden.jsp").forward(request, response);
             }
         } else if ("agregarRepuestoServicio".equals(accion)) {
             String idOrden = request.getParameter("idOrden");
@@ -124,14 +142,14 @@ public class OrdenServlet extends HttpServlet {
             boolean fuePedido = "true".equals(request.getParameter("fuePedido"));
             boolean esManoObra = "true".equals(request.getParameter("esManoObra"));
 
-            //Validación
+            // Validación
             if (nombre == null || cantidadStr == null || precioStr == null ||
                     nombre.isEmpty() || cantidadStr.isEmpty() || precioStr.isEmpty()) {
                 OrdenTrabajo orden = null;
                 for (OrdenTrabajo o : ordenes) if (o.getId().equals(idOrden)) orden = o;
                 request.setAttribute("orden", orden);
                 request.setAttribute("error", "Todos los campos son obligatorios.");
-                request.getRequestDispatcher("jsp/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
                 return;
             }
 
@@ -145,7 +163,7 @@ public class OrdenServlet extends HttpServlet {
                 for (OrdenTrabajo o : ordenes) if (o.getId().equals(idOrden)) orden = o;
                 request.setAttribute("orden", orden);
                 request.setAttribute("error", "Cantidad y precio deben ser válidos.");
-                request.getRequestDispatcher("jsp/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+                request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
                 return;
             }
 
@@ -155,7 +173,7 @@ public class OrdenServlet extends HttpServlet {
                     if (!"En reparación".equals(o.getEstado())) {
                         request.setAttribute("orden", o);
                         request.setAttribute("error", "Solo se pueden agregar detalles mientras la orden está en 'En reparación'.");
-                        request.getRequestDispatcher("jsp/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
+                        request.getRequestDispatcher("jsps/mecanico/paraiso/ordenes/agregarRepuestoServicio.jsp").forward(request, response);
                         return;
                     }
                     RepuestoServicio rs = new RepuestoServicio(nombre, cantidad, precio, fuePedido, esManoObra);
@@ -166,8 +184,8 @@ public class OrdenServlet extends HttpServlet {
                     break;
                 }
             }
-            OrdenXML.guardarOrdenes(ordenes);
-            response.sendRedirect("OrdenServlet?accion=agregarRepuestoServicio&id=" + idOrden);
+            OrdenXmlData.guardarOrdenes(ordenes);
+            response.sendRedirect("orden?accion=agregarRepuestoServicio&id=" + idOrden);
         }
     }
 }
