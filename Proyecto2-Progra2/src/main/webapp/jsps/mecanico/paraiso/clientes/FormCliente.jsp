@@ -22,7 +22,7 @@
         </div>
     </c:if>
     
-    <form action="ClienteServlet" method="post">
+    <form action="cliente" method="post">
         <input type="hidden" name="accion" value="${cliente != null ? 'editar' : 'registrar'}"/>
         
         <table>
@@ -96,14 +96,14 @@
             <tr>
                 <td colspan="2" style="text-align: center; padding-top: 20px;">
                     <input type="submit" value="${cliente != null ? 'Actualizar' : 'Registrar'}" style="padding: 10px 20px;"/>
-                    <input type="button" value="Cancelar" onclick="window.location.href='ClienteServlet'" style="padding: 10px 20px; margin-left: 10px;"/>
+                    <input type="button" value="Cancelar" onclick="window.location.href='cliente'" style="padding: 10px 20px; margin-left: 10px;"/>
                 </td>
             </tr>
         </table>
     </form>
     
     <div style="margin-top: 20px;">
-        <p><a href="ClienteServlet">← Volver a Lista de Clientes</a></p>
+        <p><a href="cliente">← Volver a Lista de Clientes</a></p>
         <p><a href="${pageContext.request.contextPath}/index.jsp">← Volver al Inicio</a></p>
     </div>
 </body>

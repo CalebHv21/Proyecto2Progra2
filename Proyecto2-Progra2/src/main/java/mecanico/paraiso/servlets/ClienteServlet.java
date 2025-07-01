@@ -14,6 +14,7 @@ import mecanico.paraiso.data.ClienteXmlData;
 
 @WebServlet(name = "cliente", urlPatterns = {"/cliente"})
 public class ClienteServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -24,9 +25,13 @@ public class ClienteServlet extends HttpServlet {
             Cliente cliente = ClienteXmlData.buscarClientePorId(clientes, id);
             request.setAttribute("cliente", cliente);
             request.getRequestDispatcher("jsps/mecanico/paraiso/clientes/FormCliente.jsp").forward(request, response);
+        } else if ("registrar".equals(accion)) {
+            // Forward to the form page without setting a cliente attribute
+            request.getRequestDispatcher("jsps/mecanico/paraiso/clientes/FormCliente.jsp").forward(request, response);
         } else {
             List<Cliente> clientes = ClienteXmlData.leerClientes();
             ClienteXmlData.ordenarClientesPorId(clientes);
+            request.setAttribute("clientes", clientes);  // Don't forget to set the attribute!
             request.getRequestDispatcher("jsps/mecanico/paraiso/clientes/ListarClientes.jsp").forward(request, response);
         }
     }

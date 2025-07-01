@@ -12,7 +12,7 @@
 </head>
 <body>
 <h2>${cliente != null ? 'Editar' : 'Registrar'} Cliente</h2>
-<form action="ClienteServlet" method="post">
+<form action="cliente" method="post">
     <input type="hidden" name="accion" value="${cliente != null ? 'editar' : 'registrar'}"/>
     <label>Cédula:</label>
     <input type="text" name="id" value="${cliente.id}" ${cliente != null ? 'readonly' : ''} required/><br/>

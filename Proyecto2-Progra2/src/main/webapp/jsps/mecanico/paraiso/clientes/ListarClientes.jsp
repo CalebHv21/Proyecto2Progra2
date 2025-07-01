@@ -1,8 +1,4 @@
-<%-- 
-    Document   : ListarClientes
-    Created on : Jun 29, 2025, 10:16:48 PM
-    Author     : sebas
---%>
+<%@page import="java.util.List"%>
 <%@page import="mecanico.paraiso.domain.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,23 +8,45 @@
         <title>Listar Clientes</title>
     </head>
     <body>
-        <h1>Información del cliente</h1>
-        <%
-            Cliente cliente = (Cliente) request.getAttribute("cliente");
-            if (cliente != null) {
+        <h1>Lista de Clientes</h1>
+        
+        <% 
+            List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+            if (clientes != null && !clientes.isEmpty()) {
         %>
-        <p>ID: <%= cliente.getId()%></p>
-        <p>Nomnbre: <%= cliente.getNombre()%></p>
-        <p>Apellidos: <%= cliente.getApellidos()%></p>
-        <p>Telefono: <%= cliente.getTelefono()%></p>
-        <p>Dirreccion: <%= cliente.getDireccion()%></p>
-        <p>Correo: <%= cliente.getCorreo()%></p>
-        <p>Vehiculos: <%= cliente.getVehiculos()%></p>
-
-
-
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Correo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (Cliente cliente : clientes) { %>
+                <tr>
+                    <td><%= cliente.getId() %></td>
+                    <td><%= cliente.getNombre() %></td>
+                    <td><%= cliente.getApellidos() %></td>
+                    <td><%= cliente.getTelefono() %></td>
+                    <td><%= cliente.getDireccion() %></td>
+                    <td><%= cliente.getCorreo() %></td>
+                    <td>
+                        <a href="cliente?accion=editar&id=<%= cliente.getId() %>">Editar</a>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
         <% } else { %>
-        <p>No se ha encontrado informacion del cliente o no se ha especificado un cliente. </p>
+        <p>No hay clientes registrados.</p>
         <% } %>
+        
+        <p><a href="cliente?accion=registrar">Registrar Nuevo Cliente</a></p>
+        <p><a href="${pageContext.request.contextPath}/index.jsp">Volver al Inicio</a></p>
     </body>
 </html>

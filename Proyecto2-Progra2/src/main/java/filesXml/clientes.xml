@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<clientes>
+  <cliente>
+    <id>112</id>
+    <nombre>Sebas</nombre>
+    <apellidos>Quiros</apellidos>
+    <telefono>84222597</telefono>
+    <direccion>Paraiso</direccion>
+    <correo>sebas182005@gmail.com</correo>
+  </cliente>
+  <cliente>
+    <id>1123</id>
+    <nombre>Sebas</nombre>
+    <apellidos>Quiros</apellidos>
+    <telefono>84222597</telefono>
+    <direccion>Paraiso</direccion>
+    <correo>sebas182005@gmail.com</correo>
+  </cliente>
+</clientes>

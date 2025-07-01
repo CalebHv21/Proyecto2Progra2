@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vehiculos>
+  <vehiculo>
+    <placa>666666</placa>
+    <marca>Honda</marca>
+    <modelo>Civic</modelo>
+    <color>Negro</color>
+    <estilo>Sedán</estilo>
+    <anio>1999</anio>
+    <vin>VIN119490038</vin>
+    <cilindraje>2.0</cilindraje>
+    <clienteId>678576</clienteId>
+  </vehiculo>
+  <vehiculo>
+    <placa>123456</placa>
+    <marca>Toyota</marca>
+    <modelo>Hilux</modelo>
+    <color>Negro</color>
+    <estilo>Pickup</estilo>
+    <anio>2015</anio>
+    <vin>VIN119490038</vin>
+    <cilindraje>10.0</cilindraje>
+    <clienteId>112</clienteId>
+  </vehiculo>
+</vehiculos>

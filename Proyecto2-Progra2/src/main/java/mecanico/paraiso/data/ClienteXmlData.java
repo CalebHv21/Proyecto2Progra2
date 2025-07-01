@@ -7,14 +7,15 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import java.io.*;
 import java.util.*;
-        
+
 /**
  *
  * @author sebas
  */
 public class ClienteXmlData {
-    private static final String rutaArchivo = "C:\\Users\\sebas\\OneDrive\\Escritorio\\Progra 2(2)\\New folder\\Proyecto2-Progra2.v2\\src\\main\\java\\filesXml\\clientes.xml";
-    
+
+    private static final String rutaArchivo = "C:\\Users\\sebas\\OneDrive\\Escritorio\\Progra2\\Proyecto2-Progra2\\Proyecto-2-de-Progra-2\\Proyecto2-Progra2\\src\\main\\java\\filesXml\\clientes.xml";
+
     public static List<Cliente> leerClientes() {
         List<Cliente> clientes = new ArrayList<>();
         try {
@@ -32,12 +33,12 @@ public class ClienteXmlData {
             List<Element> clienteElements = rootElement.getChildren("cliente");
             for (Element clienteElement : clienteElements) {
                 Cliente cliente = new Cliente(
-                    getElementValue(clienteElement, "id"),
-                    getElementValue(clienteElement, "nombre"),
-                    getElementValue(clienteElement, "apellidos"),
-                    getElementValue(clienteElement, "telefono"),
-                    getElementValue(clienteElement, "direccion"),
-                    getElementValue(clienteElement, "correo")
+                        getElementValue(clienteElement, "id"),
+                        getElementValue(clienteElement, "nombre"),
+                        getElementValue(clienteElement, "apellidos"),
+                        getElementValue(clienteElement, "telefono"),
+                        getElementValue(clienteElement, "direccion"),
+                        getElementValue(clienteElement, "correo")
                 );
                 clientes.add(cliente);
             }
@@ -58,14 +59,14 @@ public class ClienteXmlData {
 
             for (Cliente cliente : clientes) {
                 Element clienteElement = new Element("cliente");
-                
+
                 clienteElement.addContent(new Element("id").setText(cliente.getId()));
                 clienteElement.addContent(new Element("nombre").setText(cliente.getNombre()));
                 clienteElement.addContent(new Element("apellidos").setText(cliente.getApellidos()));
                 clienteElement.addContent(new Element("telefono").setText(cliente.getTelefono()));
                 clienteElement.addContent(new Element("direccion").setText(cliente.getDireccion()));
                 clienteElement.addContent(new Element("correo").setText(cliente.getCorreo()));
-                
+
                 rootElement.addContent(clienteElement);
             }
 
@@ -87,10 +88,10 @@ public class ClienteXmlData {
         try {
             File file = new File(rutaArchivo);
             file.getParentFile().mkdirs();
-            
+
             Element rootElement = new Element("clientes");
             Document document = new Document(rootElement);
-            
+
             XMLOutputter xmlOutputter = new XMLOutputter();
             xmlOutputter.setFormat(Format.getPrettyFormat());
             xmlOutputter.output(document, new FileWriter(rutaArchivo));
@@ -117,7 +118,7 @@ public class ClienteXmlData {
         if (clientes.isEmpty()) {
             return "CLI001";
         }
-        
+
         int maxNum = 0;
         for (Cliente cliente : clientes) {
             String id = cliente.getId();
@@ -132,7 +133,7 @@ public class ClienteXmlData {
                 }
             }
         }
-        
+
         return String.format("CLI%03d", maxNum + 1);
     }
 }
