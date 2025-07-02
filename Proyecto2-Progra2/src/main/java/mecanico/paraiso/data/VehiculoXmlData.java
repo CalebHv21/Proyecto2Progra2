@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.*;
 
 public class VehiculoXmlData {
-    private static final String XML_PATH = "C:\\Users\\sebas\\OneDrive\\Escritorio\\Progra2\\Proyecto2-Progra2\\Proyecto-2-de-Progra-2\\Proyecto2-Progra2\\src\\main\\java\\filesXml\\vehiculos.xml";
+    private static final String XML_PATH = "src/main/java/filesXml/vehiculos.xml";
 
     public static List<Vehiculo> leerVehiculos() {
         List<Vehiculo> vehiculos = new ArrayList<>();
