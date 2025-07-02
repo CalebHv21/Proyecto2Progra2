@@ -12,7 +12,7 @@
 </head>
 <body>
 <h2>Agregar Repuesto/Servicio a Orden #${orden.id}</h2>
-<form action="OrdenServlet" method="post">
+<form action="orden" method="post">
     <input type="hidden" name="accion" value="agregarRepuestoServicio"/>
     <input type="hidden" name="idOrden" value="${orden.id}"/>
 

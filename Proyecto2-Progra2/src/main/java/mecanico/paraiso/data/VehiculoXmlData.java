@@ -30,10 +30,10 @@ public class VehiculoXmlData {
                     Vehiculo vehiculo = new Vehiculo(
                         getElementValue(vehiculoElement, "placa"),
                         getElementValue(vehiculoElement, "marca"),
-                        getElementValue(vehiculoElement, "modelo"), // Agregar modelo
+                        getElementValue(vehiculoElement, "modelo"),
                         getElementValue(vehiculoElement, "color"),
                         getElementValue(vehiculoElement, "estilo"),
-                        Integer.parseInt(getElementValue(vehiculoElement, "anio")), // Mantener anio en XML
+                        Integer.parseInt(getElementValue(vehiculoElement, "anio")),
                         getElementValue(vehiculoElement, "vin"),
                         Double.parseDouble(getElementValue(vehiculoElement, "cilindraje")),
                         getElementValue(vehiculoElement, "clienteId")
@@ -65,7 +65,7 @@ public class VehiculoXmlData {
                 vehiculoElement.addContent(new Element("modelo").setText(vehiculo.getModelo() != null ? vehiculo.getModelo() : ""));
                 vehiculoElement.addContent(new Element("color").setText(vehiculo.getColor()));
                 vehiculoElement.addContent(new Element("estilo").setText(vehiculo.getEstilo()));
-                vehiculoElement.addContent(new Element("anio").setText(String.valueOf(vehiculo.getAnno()))); // Mantener anio en XML
+                vehiculoElement.addContent(new Element("anio").setText(String.valueOf(vehiculo.getAnno())));
                 vehiculoElement.addContent(new Element("vin").setText(vehiculo.getVin()));
                 vehiculoElement.addContent(new Element("cilindraje").setText(String.valueOf(vehiculo.getCilindraje())));
                 vehiculoElement.addContent(new Element("clienteId").setText(vehiculo.getClienteId()));
@@ -107,6 +107,23 @@ public class VehiculoXmlData {
         vehiculos.sort(Comparator.comparing(Vehiculo::getPlaca));
     }
 
+    // Segundo criterio de ordenamiento
+    public static void ordenarVehiculosPorMarcaYModelo(List<Vehiculo> vehiculos) {
+        vehiculos.sort((v1, v2) -> {
+            String marca1 = v1.getMarca() != null ? v1.getMarca() : "";
+            String marca2 = v2.getMarca() != null ? v2.getMarca() : "";
+            
+            int comparacionMarca = marca1.compareToIgnoreCase(marca2);
+            if (comparacionMarca == 0) {
+                String modelo1 = v1.getModelo() != null ? v1.getModelo() : "";
+                String modelo2 = v2.getModelo() != null ? v2.getModelo() : "";
+                return modelo1.compareToIgnoreCase(modelo2);
+            }
+            return comparacionMarca;
+        });
+    }
+
+    // Búsqueda binaria (ya implementada)
     public static Vehiculo buscarVehiculoPorPlaca(List<Vehiculo> vehiculos, String placa) {
         ordenarVehiculosPorPlaca(vehiculos);
         int left = 0, right = vehiculos.size() - 1;

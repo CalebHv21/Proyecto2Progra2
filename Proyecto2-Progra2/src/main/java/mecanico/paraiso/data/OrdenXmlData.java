@@ -150,6 +150,61 @@ public class OrdenXmlData {
         }
     }
 
+    // Primer criterio de ordenamiento - por ID (implícito en el flujo actual)
+    public static void ordenarOrdenesPorId(List<OrdenTrabajo> ordenes) {
+        ordenes.sort((o1, o2) -> {
+            try {
+                int id1 = Integer.parseInt(o1.getId());
+                int id2 = Integer.parseInt(o2.getId());
+                return Integer.compare(id1, id2);
+            } catch (NumberFormatException e) {
+                return o1.getId().compareToIgnoreCase(o2.getId());
+            }
+        });
+    }
+
+    // Segundo criterio de ordenamiento - por fecha (más recientes primero)
+    public static void ordenarOrdenesPorFecha(List<OrdenTrabajo> ordenes) {
+        ordenes.sort((o1, o2) -> {
+            if (o1.getFechaIngreso() == null && o2.getFechaIngreso() == null) return 0;
+            if (o1.getFechaIngreso() == null) return 1;
+            if (o2.getFechaIngreso() == null) return -1;
+            // Ordenar por fecha descendente (más recientes primero)
+            return o2.getFechaIngreso().compareTo(o1.getFechaIngreso());
+        });
+    }
+
+    // Tercer criterio de ordenamiento - por estado y luego por fecha
+    public static void ordenarOrdenesPorEstadoYFecha(List<OrdenTrabajo> ordenes) {
+        ordenes.sort((o1, o2) -> {
+            int prioridad1 = getPrioridadEstado(o1.getEstado());
+            int prioridad2 = getPrioridadEstado(o2.getEstado());
+            
+            int comparacionEstado = Integer.compare(prioridad1, prioridad2);
+            if (comparacionEstado == 0) {
+                // Si tienen el mismo estado, ordenar por fecha
+                if (o1.getFechaIngreso() == null && o2.getFechaIngreso() == null) return 0;
+                if (o1.getFechaIngreso() == null) return 1;
+                if (o2.getFechaIngreso() == null) return -1;
+                return o1.getFechaIngreso().compareTo(o2.getFechaIngreso());
+            }
+            return comparacionEstado;
+        });
+    }
+
+    // Método auxiliar para definir prioridad de estados
+    private static int getPrioridadEstado(String estado) {
+        if (estado == null) return 999;
+        
+        switch (estado) {
+            case "Diagnóstico": return 1;
+            case "En reparación": return 2;
+            case "Listo para entrega": return 3;
+            case "Entregado": return 4;
+            default: return 5;
+        }
+    }
+
     public static String generarNuevoIdOrden() {
         List<OrdenTrabajo> ordenes = leerOrdenes();
         int maxId = 0;

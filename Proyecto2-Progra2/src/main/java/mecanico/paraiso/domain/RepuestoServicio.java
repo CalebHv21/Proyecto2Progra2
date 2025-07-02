@@ -64,4 +64,8 @@ public class RepuestoServicio {
     public void setFuePedido(boolean fuePedido) {
         this.fuePedido = fuePedido;
     }
+    
+    public double getCostoTotal() {
+    return cantidad * precio;
+}
 }

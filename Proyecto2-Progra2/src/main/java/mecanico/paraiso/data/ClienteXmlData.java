@@ -109,8 +109,18 @@ public class ClienteXmlData {
         return null;
     }
 
+    // Primer criterio de ordenamiento (ya existía)
     public static void ordenarClientesPorId(List<Cliente> clientes) {
         clientes.sort(Comparator.comparing(Cliente::getId));
+    }
+
+    // Segundo criterio de ordenamiento
+    public static void ordenarClientesPorNombre(List<Cliente> clientes) {
+        clientes.sort((c1, c2) -> {
+            String nombre1 = c1.getNombre() != null ? c1.getNombre() : "";
+            String nombre2 = c2.getNombre() != null ? c2.getNombre() : "";
+            return nombre1.compareToIgnoreCase(nombre2);
+        });
     }
 
     public static String generarNuevoIdCliente() {
