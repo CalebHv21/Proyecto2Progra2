@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<clientes>
+  <cliente>
+    <id>CLI001</id>
+    <nombre>Juan</nombre>
+    <apellidos>Pérez</apellidos>
+    <telefono>12345678</telefono>
+    <direccion>San José</direccion>
+    <correo>juan@test.com</correo>
+  </cliente>
+</clientes>

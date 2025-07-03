@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ordenes>
+  <orden>
+    <id>1</id>
+    <placaVehiculo>ABC123</placaVehiculo>
+    <fechaIngreso>2025-07-03</fechaIngreso>
+    <estado>Diagnóstico</estado>
+    <descripcionProblema>Problema de motor</descripcionProblema>
+    <observaciones>Test</observaciones>
+    <fechaEstimadaDevolucion>2025-07-03</fechaEstimadaDevolucion>
+    <repuestosServicios />
+    <costoTotal>0.0</costoTotal>
+  </orden>
+</ordenes>

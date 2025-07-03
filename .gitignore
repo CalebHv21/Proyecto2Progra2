@@ -1,0 +1,22 @@
+# Maven build artifacts
+target/
+
+# IDE files
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
