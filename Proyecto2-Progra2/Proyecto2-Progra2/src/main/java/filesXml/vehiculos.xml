@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vehiculos>
+  <vehiculo>
+    <placa>ABC123</placa>
+    <marca>Toyota</marca>
+    <modelo>Corolla</modelo>
+    <color>Rojo</color>
+    <estilo>Sedán</estilo>
+    <anio>2020</anio>
+    <vin>VIN123</vin>
+    <cilindraje>1.8</cilindraje>
+    <clienteId>CLI001</clienteId>
+  </vehiculo>
+</vehiculos>

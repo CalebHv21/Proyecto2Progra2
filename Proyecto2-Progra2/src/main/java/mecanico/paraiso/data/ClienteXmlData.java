@@ -6,6 +6,8 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -14,7 +16,51 @@ import java.util.*;
  */
 public class ClienteXmlData {
 
-    private static final String rutaArchivo = "src/main/java/filesXml/clientes.xml";
+    private static final String rutaArchivo = getXmlFilePath("clientes.xml");
+
+    /**
+     * Utility method to get the absolute path to XML files in the source directory
+     */
+    private static String getXmlFilePath(String fileName) {
+        try {
+            // Get the current working directory
+            String currentDir = System.getProperty("user.dir");
+            Path currentPath = Paths.get(currentDir);
+            
+            // Try to find the project root by looking for pom.xml
+            Path projectRoot = findProjectRoot(currentPath);
+            
+            if (projectRoot != null) {
+                Path xmlDir = projectRoot.resolve("Proyecto2-Progra2/src/main/java/filesXml");
+                return xmlDir.resolve(fileName).toString();
+            } else {
+                // Fallback to relative path if project root not found
+                return "src/main/java/filesXml/" + fileName;
+            }
+        } catch (Exception e) {
+            // Fallback to relative path in case of any error
+            return "src/main/java/filesXml/" + fileName;
+        }
+    }
+    
+    /**
+     * Find the project root directory by looking for pom.xml
+     */
+    private static Path findProjectRoot(Path startPath) {
+        Path current = startPath;
+        while (current != null) {
+            // Check if this directory contains pom.xml
+            if (current.resolve("pom.xml").toFile().exists()) {
+                return current;
+            }
+            // Check if this directory contains Proyecto2-Progra2/pom.xml (in case we're in the parent)
+            if (current.resolve("Proyecto2-Progra2/pom.xml").toFile().exists()) {
+                return current;
+            }
+            current = current.getParent();
+        }
+        return null;
+    }
 
     public static List<Cliente> leerClientes() {
         List<Cliente> clientes = new ArrayList<>();
